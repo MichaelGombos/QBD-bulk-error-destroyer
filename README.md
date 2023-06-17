@@ -22,6 +22,6 @@ to start the script, you will need to be on the sync status page. Then, click on
 
 The script will then run through all of the errors until It reaches the last one.
 
-Here is a video example of setting up the script [timestamp], and then running it [timestamp]. 
+Here is a video example of setting up the script , and then running it https://www.youtube.com/watch?v=YUrWY1SwdoQ 
 
 I plan to turn this script into a chrome extension, and add a user interface to make it more user freindly. 
