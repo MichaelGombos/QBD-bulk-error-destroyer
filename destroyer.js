@@ -44,12 +44,8 @@ let delay = localStorage.getItem("delay") ? Number(localStorage.getItem("delay")
     }, delay)
 
 
-window.clearRunCount = () => {
-    localStorage.setItem("runCount",0)
-    console.log("runCount cleared")
-}
-
 window.setRunLimit = (amount) => {
+    localStorage.setItem("runCount",0)
     localStorage.setItem("runLimit",amount)
     console.log("runLimit set to : ", amount)
 }
