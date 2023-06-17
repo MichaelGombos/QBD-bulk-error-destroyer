@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  Object integrate QBD errors in bulk
 // @author       Michael Gombos
-// @include      https://app01.us.bill.com/*
+// @include      https://app0*.us.bill.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bill.com
 // @grant        none
 // ==/UserScript==
