@@ -1,3 +1,5 @@
+
+let neoIframe
 let iframeDocument 
 let allowExportButton 
 let objectIntegratedButton 
@@ -21,20 +23,13 @@ delay = localStorage.getItem("delay") ? Number(localStorage.getItem("delay")) : 
     'use strict';
 
     setTimeout(() => {
-        const neoIframe = document.querySelector("#neoIframe")
+        neoIframe = document.querySelector("#neoIframe")
         if(neoIframe && isRunning){ 
-            console.log("isRunning", isRunning)
-            iframeDocument = neoIframe.contentDocument;
-            allowExportButton = iframeDocument.querySelector("#allowExport") //unsused.
-            objectIntegratedButton = iframeDocument.querySelector("#objIntegrated")
-            nextButton = iframeDocument.querySelector(`button[name="next"]`)
-
             console.log("CURRENT RUN:" , runCount)
             iterateOnce();
-
         }
         else{
-            console.log("can't find iframe")
+            console.log("can't find iframe, or not running", neoIframe, isRunning)
         }
     }, delay)
 
@@ -44,6 +39,14 @@ delay = localStorage.getItem("delay") ? Number(localStorage.getItem("delay")) : 
 }
 
 const iterateOnce = () => {
+    console.log("hello? anybody home", runCount, runLimit)
+
+    iframeDocument = neoIframe.contentDocument;
+    allowExportButton = iframeDocument.querySelector("#allowExport") //unsused.
+    objectIntegratedButton = iframeDocument.querySelector("#objIntegrated")
+    nextButton = iframeDocument.querySelector(`button[name="next"]`)
+
+
     if(runCount < runLimit){
         console.log("So I tried to run here.")
         if(nextButton && objectIntegratedButton){
@@ -65,23 +68,28 @@ const evaluatePopupMessage = (type, value) => {
         case "delay":
             console.log("delay modified from popup")
             localStorage.setItem("delay",value)
+            delay = value
             break;
         case "runLimit":
             console.log("runLimit modified from popup")
+            runLimit = value
             localStorage.setItem("runLimit",value)
             break;
         case "start":
             console.log("started from popup")
             localStorage.setItem("isRunning",true)
+            isRunning = true;
             iterateOnce();
             break;
         case "stop":
             console.log("stopped from popup")
             localStorage.setItem("isRunning", false)
+            isRunning = false;
             break;
         case "reset":
             console.log("reset from popup")
             localStorage.setItem("runCount", 0)
+            runCount = 0;
             localStorage.setItem("isRunning", false)
             break;
         case "log":
