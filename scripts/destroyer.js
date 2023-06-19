@@ -22,7 +22,7 @@ delay = localStorage.getItem("delay") ? Number(localStorage.getItem("delay")) : 
 
     setTimeout(() => {
         const neoIframe = document.querySelector("#neoIframe")
-        if(neoIframe && isRunning){ //TODO add isrunning boolean
+        if(neoIframe && isRunning){ 
             console.log("isRunning", isRunning)
             iframeDocument = neoIframe.contentDocument;
             allowExportButton = iframeDocument.querySelector("#allowExport") //unsused.
@@ -49,8 +49,9 @@ const iterateOnce = () => {
         if(nextButton && objectIntegratedButton){
             objectIntegratedButton.checked == false ? objectIntegratedButton.click() : console.log("already unchecked")
             setTimeout(() => {
-                nextButton.click();
+                updateRuncountText(runCount+1, runLimit);
                 localStorage.setItem("runCount",runCount+1)
+                nextButton.click();
             }, delay)
         }
         else{
@@ -97,36 +98,33 @@ chrome.runtime.onMessage.addListener(
         // Check if data is present in the message
         if (request.type) {
             // Save the data to local storage
-
             evaluatePopupMessage(request.type,request.value)
         }
     }
 );
 
+const updateRuncountText = (newValue, limit) => {
+    console.log("just tried to send a message lol")
+    chrome.runtime.sendMessage({
+        popupRequestType: "updateRuncount",
+        data: {newValue,limit}
+    }, function(response) {
+        console.log(response.farewell);
+      });
+}
+
 
 // Select the node that will be observed for mutations
-let targetNode = document.body; // Change this to any other node based on the SPA structure
+let targetNode = document.body; 
+let config = { attributes: false, childList: true, subtree: true };
 
-// Options for the observer (which mutations to observe)
-let config = { attributes: true, childList: true, subtree: true };
-
-// Callback function to execute when mutations are observed
-let callback = function(mutationsList, observer) {
+let observerCallback = function(mutationsList, observer) {
     for(let mutation of mutationsList) {
         if (mutation.type === 'childList') {
-            // This indicates a change in the DOM tree; do something here
             console.log('A child node has been added or removed.');
-            //try to run the destroyer script:
             destroyer();
-        }
-        else if (mutation.type === 'attributes') {
-            console.log('The ' + mutation.attributeName + ' attribute was modified.');
         }
     }
 };
-
-// Create an observer instance linked to the callback function
-let observer = new MutationObserver(callback);
-
-// Start observing the target node for configured mutations
+let observer = new MutationObserver(observerCallback);
 observer.observe(targetNode, config);

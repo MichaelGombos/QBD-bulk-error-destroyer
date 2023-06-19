@@ -8,12 +8,13 @@ const resetButton = document.querySelector("#reset-btn")
 const logButton = document.querySelector("#log-btn")
 const currentStepText = document.querySelector("#currentStep")
 
-console.log("are all of my values here?",
-runLimitInput,
-delayInput,
-startButton,
-logButton,
-currentStepText)
+let menuCurrentStep = localStorage.getItem("menuCurrentStep") ? JSON.parse(localStorage.getItem("menuCurrentStep")) : 0;
+let menuRunLimit = localStorage.getItem("menuRunLimit") ? JSON.parse(localStorage.getItem("menuRunLimit")) : 0;
+
+const updateCurrentStepText = () => {
+  currentStepText.innerText = `Current step : ${menuCurrentStep}/${menuRunLimit}`
+}
+updateCurrentStepText();
 
 const sendMessageToContentScript = (type, value ) => {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -22,6 +23,21 @@ const sendMessageToContentScript = (type, value ) => {
 });
 }
 
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.popupRequestType === "updateRuncount"){
+    console.log("THIS MESSAGE WAS RECEIVED IN THE POPUP" , request.data);
+
+    menuCurrentStep = request.data.newValue;
+    localStorage.setItem("menuCurrentStep", menuCurrentStep)
+    menuRunLimit = request.data.limit;
+    localStorage.setItem("menuRunLimit", menuRunLimit)
+
+    updateCurrentStepText();
+    sendResponse({farewell: "popup farewell"});
+    }
+  }
+);
 
 
 delayInput.addEventListener("change", () => {
@@ -31,6 +47,10 @@ delayInput.addEventListener("change", () => {
 runLimitInput.addEventListener("change", () => {
   console.log("input yep")
   sendMessageToContentScript("runLimit",runLimitInput.value)
+
+  menuRunLimit = runLimitInput.value;
+  localStorage.setItem("menuRunLimit", runLimitInput.value)
+  updateCurrentStepText();
 } )
 startButton.addEventListener("click", () => {
   console.log("no way..")
@@ -43,6 +63,9 @@ stopButton.addEventListener("click", () => {
 resetButton.addEventListener("click", () => {
   console.log("no way..")
   sendMessageToContentScript("reset")
+  menuCurrentStep = 0;
+  localStorage.setItem("menuCurrentStep",0)
+  updateCurrentStepText();
 })
 
 logButton.addEventListener("click", () => {
