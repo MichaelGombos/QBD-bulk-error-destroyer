@@ -1,3 +1,87 @@
+body{
+  width:200px;
+  display:flex;
+  flex-direction: column;
+  gap:10px;
+}
+.PageTitle-label {
+  color: #333333;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  padding-right: 20px;
+  margin-bottom: 0;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.btnBase, .btnBase:link, .btnBase:active, .btnBase:visited {
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Sohne, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4285;
+  margin: 0 2px;
+  padding: 6px 12px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.btnPrim, .btnPrim:link, .btnPrim:visited, .btnPrim:active {
+  background-color: #1B0EB1;
+  background-image: none;
+  -webkit-filter: none;
+  filter: none;
+  border-color: #1B0EB1;
+  color: #ffffff;
+}
+
 .hidden{
   display:none;
+}
+
+
+
+.NeoTextareaField-input {
+  font-size: 15px;
+}
+.NeoTextareaField-input {
+  background: none;
+  padding: 6px 12px;
+  box-shadow: none;
+  width: 100%;
+  -moz-appearance: textfield;
+}
+
+.form-control {
+  border-radius: 2px;
+  line-height: var(--form-control-line-height);
+  color: var(--primary-text-color);
+  border-color: #616161;
+}
+
+.NeoTextbox {
+  box-shadow: none;
+  font-size: 15px;
+  background-color: transparent;
+  -moz-appearance: textfield;
+}
+
+.form-control {
+  display: block;
+  width: 86%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

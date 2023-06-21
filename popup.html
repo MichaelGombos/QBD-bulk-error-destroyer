@@ -7,19 +7,19 @@
     <link rel="stylesheet" href="./popup.css" />
   </head>
   <body>
-    <h1>QBD Sync error destroyer</h1>
+    <h1 class="PageTitle-label">QBD Sync error destroyer</h1>
     <div>
       <label for="runLimit">Run Limit:</label>
-      <input type="number" id="runLimit" name="runLimit" min="0">
+      <input class="NeoTextareaField-input NeoTextbox form-control ng-pristine ng-valid ng-touched" type="text" id="runLimit" name="runLimit" min="1">
   </div>
   <div>
     <label for="delay">Run Delay (ms):</label>
-    <input type="number" id="runDelay" name="runDelay" min="20">
+    <input class="NeoTextareaField-input NeoTextbox form-control ng-pristine ng-valid ng-touched" type="text" id="runDelay" name="runDelay" min="20">
   </div>  
-    <button id="start-btn">Start</button>
-    <button id="stop-btn">Stop</button>
-    <button id="reset-btn">Reset</button>
-    <button id="log-btn">Download Log</button>
+    <button class="btnBase btnPrim" id="start-btn">Start</button>
+    <button class="btnBase btnPrim" id="stop-btn">Stop</button>
+    <button class="btnBase btnPrim" id="reset-btn">Reset</button>
+    <button class="btnBase btnPrim" id="log-btn">Download Log</button>
     <p id="currentStep">Current step : NA/NA</p>
 
     <script src="./scripts/popup.js" type="module"></script>

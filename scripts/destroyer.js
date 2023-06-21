@@ -13,7 +13,7 @@ let delay
 let logData
 
 
-const destroyer = ()  => {
+const iterateOnce = ()  => {
 
 
 logData = localStorage.getItem("logData") ? localStorage.getItem("logData") : "";
@@ -29,11 +29,10 @@ delay = localStorage.getItem("delay") ? Number(localStorage.getItem("delay")) : 
 
     setTimeout(() => {
         neoIframe = document.querySelector("#neoIframe")
-        iframeDocument = neoIframe.contentDocument;
         if(neoIframe && isRunning){ 
             console.log("CURRENT RUN:" , runCount)
             pushCurrentFrameToLog();
-            iterateOnce();
+            traverseUI();
         }
         else{
             console.log("can't find iframe, or not running", neoIframe, isRunning)
@@ -46,6 +45,7 @@ delay = localStorage.getItem("delay") ? Number(localStorage.getItem("delay")) : 
 }
 
 const pushCurrentFrameToLog = () => {
+    iframeDocument = neoIframe.contentDocument;
     table = iframeDocument.querySelector(".dc-two  table");
     if(table !== null){
         let tableText = table.innerText
@@ -76,26 +76,35 @@ function downloadLogAsFile() {
   }
   
 
-const iterateOnce = () => {
-
+const traverseUI = () => {
+    setTimeout(() => {
+    iframeDocument = neoIframe.contentDocument;
+    console.log("what is our iframedocument looking like?", iframeDocument, neoIframe)
     allowExportButton = iframeDocument.querySelector("#allowExport") //unsused.
     objectIntegratedButton = iframeDocument.querySelector("#objIntegrated")
     nextButton = iframeDocument.querySelector(`button[name="next"]`)
 
 
     if(runCount < runLimit){
+        console.log("going to iterate now.")
         if(nextButton && objectIntegratedButton){
-            objectIntegratedButton.checked == false ? objectIntegratedButton.click() :
-            setTimeout(() => {
-                updateRuncountText(runCount+1, runLimit);
-                localStorage.setItem("runCount",runCount+1)
-                nextButton.click();
-            }, delay)
+            console.log("clicking and whatnot")
+            objectIntegratedButton.checked == false ? objectIntegratedButton.click() : ""
+            runCount += 1;
+            updateRuncountText(runCount, runLimit);
+            localStorage.setItem("runCount",runCount)
+            nextButton.click();
+            console.log("end of clicking and whatnote")
         }
         else{
-            console.log("one of those buttons aren't showing up.", nextButton, objectIntegratedButton)
+            console.log("one of those buttons aren't showing up.", nextButton, objectIntegratedButton, "this is the iframe doc", iframeDocument)
         }
     }
+    else{
+        console.log("over run count limit.", runCount, runLimit, typeof runCount, typeof runLimit)
+    }
+    }, delay)
+
 }
 
 const evaluatePopupMessage = (type, value) => {
@@ -114,7 +123,7 @@ const evaluatePopupMessage = (type, value) => {
             console.log("started from popup")
             localStorage.setItem("isRunning",true)
             isRunning = true;
-            iterateOnce();
+            traverseUI();
             break;
         case "stop":
             console.log("stopped from popup")
@@ -154,7 +163,7 @@ const updateRuncountText = (newValue, limit) => {
         popupRequestType: "updateRuncount",
         data: {newValue,limit}
     }, function(response) {
-        // console.log(response.farewell);
+        console.log(response.farewell);
       });
 }
 
@@ -166,8 +175,8 @@ let config = { attributes: false, childList: true, subtree: true };
 let observerCallback = function(mutationsList, observer) {
     for(let mutation of mutationsList) {
         if (mutation.type === 'childList') {
-            // console.log('A child node has been added or removed.');
-            destroyer();
+            console.log('A child node has been added or removed.');
+            iterateOnce();
         }
     }
 };
