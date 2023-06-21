@@ -1,27 +1,25 @@
-# QBD Bulk Error Clear Tool
+## QBD bulk error destroyer
 
-This is a tool built to clear QBD sync errors from the bill.com sync status page
+### What's new?
+Instead of using tampermonkey to run the script. This version is a chrome extension. 
 
-To use this script. You will need the tampermonkey google chrome extension
+### How to install
 
-Once this extension is installed. You can click directly on the tampermonkey extension icon, then click "create new script"
+1 First, click on the three dots in the top right of chrome, then select "extensions" > "manage extensions"
+![1 manage extensions](https://github.com/MichaelGombos/QBD-bulk-error-destroyer/assets/71684424/cbe26fbf-42fe-489e-90d1-f927e617df14)
 
-You can then paste in the contents from the destroyer.js file in this repository.
+2 From the extensions page, turn developer mode on in the top right.
+![enable developer mode](https://github.com/MichaelGombos/QBD-bulk-error-destroyer/assets/71684424/46d6c454-6261-49b9-b49d-bf37b4756844)
 
-Once you have pasted in the contents. Hit "file" then "save" (in the top left.)
+3 Now a new menu should open, you can click on "load unpacked extension"
+![load an upacked extension](https://github.com/MichaelGombos/QBD-bulk-error-destroyer/assets/71684424/8f8c5d99-eb02-4d4a-9d5e-7083b09cf4f9)
 
-Then click on "installed userscripts" in the top right, and make sure your new script is enabled.
+4 Now you can unzip the extension folder you downloaded from this repository, and select it.
+![unzip the extension that you downloaded from this repository and select it](https://github.com/MichaelGombos/QBD-bulk-error-destroyer/assets/71684424/c124f67c-49cd-41ed-8895-7ace05507073)
 
-Now you can refresh your page. This script will now be active.
+### How to use
 
-window.setRunLimit() will allow you to set the amount of times you want this script to run
-window.setDelay() will allow you to set the amount of time between each iteration
-window.clearRunCount() will allow you to reset the internal counter for the current iteration
+Once you have installed the extension, the video below demonstrates how to use it.
 
-to start the script, you will need to be on the sync status page. Then, click on the edit symbol next to "fix" on the first error.
+https://github.com/MichaelGombos/QBD-bulk-error-destroyer/assets/71684424/5cabda8f-29fe-4c9a-b6a5-73bcb984e2ec
 
-The script will then run through all of the errors until It reaches the last one.
-
-Here is a video example of setting up the script , and then running it https://www.youtube.com/watch?v=YUrWY1SwdoQ 
-
-I plan to turn this script into a chrome extension, and add a user interface to make it more user freindly. 
