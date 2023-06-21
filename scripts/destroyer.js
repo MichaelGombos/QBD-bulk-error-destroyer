@@ -45,6 +45,7 @@ delay = localStorage.getItem("delay") ? Number(localStorage.getItem("delay")) : 
 }
 
 const pushCurrentFrameToLog = () => {
+    console.log("DID this run though?")
     iframeDocument = neoIframe.contentDocument;
     table = iframeDocument.querySelector(".dc-two  table");
     if(table !== null){
@@ -174,8 +175,8 @@ let config = { attributes: false, childList: true, subtree: true };
 
 let observerCallback = function(mutationsList, observer) {
     for(let mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-            console.log('A child node has been added or removed.');
+        if (mutation.type === 'childList' && mutation.target.tagName !== "BODY") {
+            console.log('A child node has been added or removed.', mutation , JSON.parse(JSON.stringify(mutation.target)));
             iterateOnce();
         }
     }
